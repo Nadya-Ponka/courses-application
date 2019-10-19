@@ -1,0 +1,33 @@
+header {
+  padding: 10px 20px;
+  display: flex;
+	justify-content: flex-start;
+	background-color: #414452;
+	align-items: center;
+}
+
+logo {
+	display: flex;
+	align-items: center;
+}
+
+.admin {
+	margin-left: auto;
+}
+
+input {
+	background-color: transparent;
+	color: #FFF;
+	border: 0;
+	width:100px;
+}
+
+input::placeholder {
+	color:#FFF;
+}
+
+.btn-primary {
+	background-color: transparent;
+	border: 0;
+	font-weight: 700;
+}

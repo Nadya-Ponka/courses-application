@@ -1,0 +1,27 @@
+footer {
+  padding: 10px 20px;
+  display: flex;
+	justify-content: flex-end;
+	background-color: #414452;
+	align-items: center;
+	position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+h3 {
+	display: inline-block;
+  font-size: 10px;
+	margin-left: 20px;
+	margin-top: 10px;
+	text-transform: uppercase;
+	color: #FFF;
+	font-weight: 700;
+}
+
+img {
+	height:25px;
+	cursor:pointer;
+	outline: none;
+}

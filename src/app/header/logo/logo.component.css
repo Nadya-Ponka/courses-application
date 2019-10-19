@@ -1,0 +1,16 @@
+h1 {
+	display: inline-block;
+  font-size: 15px;
+	margin-left: 10px;
+	margin-top: 10px;
+	text-transform: uppercase;
+	color: #FFF;
+	font-weight: 700;
+}
+
+img {
+	margin-top: -15px;
+	height:45px;
+	cursor:pointer;
+	outline: none;
+}
