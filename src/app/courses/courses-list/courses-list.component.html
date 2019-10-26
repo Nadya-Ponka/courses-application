@@ -1,1 +1,13 @@
-<p>courses-list works!</p>
+<div class="container">
+	<form class="form-inline my-2 my-lg-0">
+		<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+			[(ngModel)]="searchText" name="searchText"
+		>
+		<button class="btn btn-success my-2 my-sm-0" type="button" (click)="onSearchText(searchText)">Search</button>
+	</form>
+	<button class="btn btn-primary my-2 my-lg-0" style="align-self: flex-end">+ Add course</button>
+	<div *ngFor="let item of courses">
+		<course [item]="item" (deleteCourse)="onDeleteCourse($event)"></course>
+	</div>
+	<button class="btn btn-secondary" type="button" (click)="false">Show more</button>
+</div>

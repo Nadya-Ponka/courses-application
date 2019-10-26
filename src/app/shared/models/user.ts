@@ -1,16 +1,13 @@
-export interface User {
+export interface IUser {
   id: number;
   firstName: string;
   lastName: string;
 }
 
-export class UserItem implements User {
+export class UserItem implements IUser {
   constructor(
     public id: number,
-    public firstName: string,
-    public lastName: string,
-  ) {
-    this.firstName = firstName || '';
-    this.lastName = lastName || '';
-  }
+    public firstName: string = '',
+    public lastName: string = '',
+  ) {}
 }

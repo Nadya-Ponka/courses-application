@@ -1,3 +1,32 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+app-root {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	overflow-y: hidden;
+}
+
+app-footer {
+	height: fit-content;
+	padding: 10px 50px;
+  display: flex;
+	justify-content: flex-end;
+	background-color: #414452;
+	align-items: center;
+  right: 0;
+  bottom: 0;
+	left: 0;
+	position: absolute;
+}
+
+courses-list {
+	height: calc(100% - 167px);
+}
+
 @font-face {
   font-family: 'icomoon';
   src:  url('./../Fonts/icomoon.eot');
@@ -10,7 +39,7 @@
   font-display: block;
 }
 
-:host ::ng-deep [class^="icon-"], [class*=" icon-"] {
+[class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   font-style: normal;
@@ -25,18 +54,36 @@
 	margin-right:10px;
 }
 
-:host ::ng-deep .icon-user:before {
+.icon-user:before {
   content: "\e971";
 }
-:host ::ng-deep .icon-exit:before {
+.icon-exit:before {
   content: "\ea14";
 }
 
-:host ::ng-deep .icon-play2:before {
+.icon-play2:before {
 	content: "\ea15";
 	font-size: 25px;
 	background: -webkit-linear-gradient(-90deg, rgba(1,205,221,1) 0%, rgba(236,255,0,1) 100%);
 	-webkit-background-clip: text;
 	background-clip: text;
-  -webkit-text-fill-color: transparent;
+	-webkit-text-fill-color: transparent;
+	cursor:pointer;
+
+}
+
+.icon-pencil:before {
+  content: "\e905";
+}
+.icon-clock:before {
+  content: "\e94e";
+}
+.icon-calendar:before {
+  content: "\e953";
+}
+.icon-search:before {
+  content: "\e986";
+}
+.icon-bin2:before {
+  content: "\e9ad";
 }

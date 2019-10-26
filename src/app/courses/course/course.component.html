@@ -1,1 +1,16 @@
-<p>course works!</p>
+<div class="row element">
+  <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+    <div class="headline">
+      <h4 class="title" style="display:inline-block;">{{item.title}}</h4>
+      <span class="time">
+        <span class="icon-clock"></span>{{item.duration | hours }}
+        <span class="icon-calendar"></span>{{ item.creationDate | date }}
+      </span>
+    </div>
+    <div>{{item.description}}</div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 for-buttons">
+    <button class="btn btn-primary"><span class="icon-pencil"></span>Edit</button>
+    <button class="btn btn-primary" (click)="onDeleteCourse()"><span class="icon-bin2"></span>Delete</button>
+  </div>
+</div>

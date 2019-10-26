@@ -6,11 +6,9 @@ h1 {
 	text-transform: uppercase;
 	color: #FFF;
 	font-weight: 700;
+	cursor:pointer;
 }
 
-img {
-	margin-top: -15px;
-	height:45px;
-	cursor:pointer;
+:host {
 	outline: none;
 }

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?5z2cgk');
-  src:  url('fonts/icomoon.eot?5z2cgk#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?5z2cgk') format('truetype'),
-    url('fonts/icomoon.woff?5z2cgk') format('woff'),
-    url('fonts/icomoon.svg?5z2cgk#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?7pguvx');
+  src:  url('fonts/icomoon.eot?7pguvx#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?7pguvx') format('truetype'),
+    url('fonts/icomoon.woff?7pguvx') format('woff'),
+    url('fonts/icomoon.svg?7pguvx#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,8 +25,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-pencil:before {
+  content: "\e905";
+}
+.icon-clock:before {
+  content: "\e94e";
+}
+.icon-calendar:before {
+  content: "\e953";
+}
 .icon-user:before {
   content: "\e971";
+}
+.icon-search:before {
+  content: "\e986";
+}
+.icon-bin2:before {
+  content: "\e9ad";
 }
 .icon-exit:before {
   content: "\ea14";
