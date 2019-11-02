@@ -13,13 +13,13 @@ export class CoursesListComponent implements OnInit {
   constructor() {}
 
   public onSearchText(text: string): string {
-		console.log('Text for search: ', text);
-		return text;
+    console.log('Text for search: ', text);
+    return text;
   }
 
   public onDeleteCourse(event: CourseItem): CourseItem {
-		console.log('Course to delete: ', event.id);
-		return event;
+    console.log('Course to delete: ', event.id);
+    return event;
   }
 
   public ngOnInit(): void {

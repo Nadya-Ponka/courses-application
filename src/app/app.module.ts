@@ -27,7 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-	constructor(readonly router: Router) {
+  constructor(readonly router: Router) {
     const replacer = (key: string, value: any): string =>
       typeof value === 'function' ? value.name : value;
 

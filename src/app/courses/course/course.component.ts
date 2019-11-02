@@ -27,7 +27,7 @@ AfterContentChecked, AfterViewChecked, OnDestroy {
   public searchText: string;
   constructor() {}
 
-  public onDeleteCourse(): void {
+  public onDelete(): void {
     this.deleteCourse.emit(this.item);
   }
 
