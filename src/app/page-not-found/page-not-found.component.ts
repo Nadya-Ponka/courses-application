@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { ReflectiveInjector, InjectionToken, inject } from '@angular/core';
+
+export const LOCATION_TOKEN = new InjectionToken<Location>('Window location object');
 
 @Component({
   selector: 'app-page-not-found',
@@ -8,9 +11,9 @@ import { Location } from '@angular/common';
 })
 export class PageNotFoundComponent implements OnInit {
 
-  constructor(private location: Location) {}
+  constructor(readonly location: Location) {}
 
-  ngOnInit() {}
+  public ngOnInit(): void {}
 
   public backToCatalogue(): void {
     this.location.back();

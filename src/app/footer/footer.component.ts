@@ -9,6 +9,6 @@ export class FooterComponent implements OnInit {
   public title = 'Made by Nadya Ponkratova';
   constructor() {}
 
-  ngOnInit() {}
+  public ngOnInit(): void {}
 
 }

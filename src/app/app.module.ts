@@ -1,33 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { CoursesListComponent } from './courses/courses-list/courses-list.component';
 import { LogoComponent } from './header/logo/logo.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { Routes, RouterModule } from '@angular/router';
 
 import { CoursesModule } from './courses/courses.module';
-
-const appRoutes: Routes = [{
-    path: '',
-    component: CoursesListComponent
-  },
-  // { path: 'scaled/:id', component: ScaledItemComponent },
-  {
-    path: 'scaled/:id/**',
-    redirectTo: '**',
-    pathMatch: 'full'
-  },
-  {
-    path: '**',
-    component: PageNotFoundComponent
-  }
-];
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -38,10 +22,15 @@ const appRoutes: Routes = [{
     BreadcrumbsComponent,
     PageNotFoundComponent
   ],
-  imports: [
-    BrowserModule, FormsModule, CoursesModule, RouterModule.forRoot(appRoutes)
-  ],
+  imports: [ BrowserModule, FormsModule, CoursesModule, AppRoutingModule ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+	constructor(readonly router: Router) {
+    const replacer = (key: string, value: any): string =>
+      typeof value === 'function' ? value.name : value;
+
+    console.log('Routes: ', JSON.stringify(router.config, replacer, 2));
+  }
+}
