@@ -1,12 +1,6 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {
-  LogoComponent
-} from './logo.component';
+import { LogoComponent } from './logo.component';
 
 describe('LogoComponent', () => {
   let component: LogoComponent;
@@ -35,4 +29,6 @@ describe('LogoComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('VIDEO COURSE');
   });
+
+  afterEach(() => fixture.destroy());
 });

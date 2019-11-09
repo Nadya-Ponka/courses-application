@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { CourseComponent } from './course.component';
 import { CourseItem } from '../../shared/models/course';
+import { CoursesListComponent } from '../courses-list/courses-list.component';
 import { HoursPipe } from './../../shared/pipes/hours-pipe/hours.pipe';
 
 const example: CourseItem = {
   id: 0,
   title: 'Video Course 1. Name tag',
+  topRated: true,
   creationDate: new Date('07/11/2009'),
   duration: 88,
   description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -18,16 +19,14 @@ const example: CourseItem = {
 };
 
 describe('Test CourseComponent as a class', () => {
+  const component: CourseComponent = new CourseComponent();
 
   it('should create', () => {
-    const component: CourseComponent = new CourseComponent();
     expect(component).toBeTruthy();
   });
 
   it('raises the deleteCourse event when clicked', (done: DoneFn) => {
-    const component: CourseComponent = new CourseComponent();
     component.item = example;
-
     component.deleteCourse.subscribe(d => {
       expect(d).toBe(example);
       done();
@@ -36,59 +35,32 @@ describe('Test CourseComponent as a class', () => {
   });
 });
 
-@Component({
-  template: `
-	<course [item]="item" (deleteCourse)="onDeleteCourse($event)"></course>
-  `
-})
-
-class TestHostComponent {
-  item = example;
-  deleteCourse: CourseItem;
-  onDeleteCourse(item: CourseItem): CourseItem {
-    this.deleteCourse = item;
-    return this.deleteCourse;
-  }
-}
-
 describe('Test CourseComponent when inside a test host', () => {
-  let testHost: TestHostComponent;
-  let  fixture: ComponentFixture < TestHostComponent >;
-  let  taskEl: DebugElement;
-  let  taskClickEl: DebugElement;
+  let courcesList: CoursesListComponent;
+  let fixture: ComponentFixture < CoursesListComponent > ;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CourseComponent, TestHostComponent, HoursPipe]
+      imports: [FormsModule], // for ngModel recognition
+      declarations: [CoursesListComponent, CourseComponent, /*TestHostComponent,*/ HoursPipe],
     });
-
-    // Создаем TestHostComponent вместо CourseComponent
-    // Такой подход имеет сайд эффект - CourseComponent тоже будет создан
-    // так как он находится в темплейте TestHostComponent
-    fixture = TestBed.createComponent(TestHostComponent);
-    testHost = fixture.componentInstance;
-
-    // Ищем элемент с классом .title
-    taskEl = fixture.debugElement.query(By.css('.title'));
-    // Ищем элемент с классом .delete
-    taskClickEl = fixture.debugElement.query(By.css('.delete'));
-
-    // Запускаем инициализацию данных
+    fixture = TestBed.createComponent(CoursesListComponent);
+    courcesList = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should display item.title', () => {
-    expect(taskEl.nativeElement.textContent).toContain(testHost.item.title);
+  it('should display right amount of cources after deleting', () => {
+    const initialCourcesLength = fixture.nativeElement.querySelectorAll('.course').length;
+
+    const deletebutton = fixture.debugElement.queryAll(By.css('button.delete'));
+    // --------course-list.component.ts--------
+    // addded handler to the onDeleteCourse() method
+    // this.courses = this.courses.filter(el => el.id !== event.id);
+    deletebutton[0].triggerEventHandler('click', null);
+    deletebutton[2].triggerEventHandler('click', null);
+
+    expect(courcesList.courses.length).toEqual(initialCourcesLength - 2);
   });
 
-  it('should raise selected event when clicked', () => {
-    // DebugElement.triggerEventHandler может сгенерить любое связанное
-    // с данными событие по имени события.
-    // Второй параметр - это объект события, переданный обработчику.
-    // В этом примере тест запускает событие «click»
-    // с нулевым объектом события.
-    taskClickEl.triggerEventHandler('click', null);
-
-    expect(testHost.deleteCourse).toBe(testHost.item);
-  });
+  afterEach(() => fixture.destroy());
 });

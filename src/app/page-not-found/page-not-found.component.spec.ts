@@ -6,22 +6,21 @@ import { PageNotFoundComponent } from './page-not-found.component';
 describe('PageNotFoundComponent', () => {
   let component: PageNotFoundComponent;
   let fixture: ComponentFixture < PageNotFoundComponent > ;
-  let loc: Location;
+  const loc = jasmine.createSpyObj('Location', ['back']);
 
   beforeEach(async (() => {
     TestBed.configureTestingModule({
       declarations: [PageNotFoundComponent],
       providers: [{
         provide: Location,
-        useValue: window.history
+        useValue: loc
       }]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    loc = jasmine.createSpyObj('Location', ['back']);
     fixture = TestBed.createComponent(PageNotFoundComponent);
-    component = new PageNotFoundComponent(loc);
+    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
@@ -33,4 +32,6 @@ describe('PageNotFoundComponent', () => {
     component.backToCatalogue();
     expect(loc.back).toHaveBeenCalledTimes(1);
   });
+
+  afterEach(() => fixture.destroy());
 });
