@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { CourseItem } from './../../models/course';
+import { CourseItem } from 'src/app/shared/models/course';
 
 @Pipe({
   name: 'searchBy'
@@ -12,9 +12,6 @@ export class SearchByPipe implements PipeTransform {
 
     text = text.toLowerCase();
 
-    return value.filter((item) => {
-      return JSON.stringify(item).toLowerCase().includes(text);
-    });
+    return value.filter((item) => JSON.stringify(item).toLowerCase().includes(text));
   }
-
 }

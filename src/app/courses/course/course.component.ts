@@ -1,23 +1,14 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-  AfterContentInit,
-  DoCheck,
-  AfterContentChecked,
-  AfterViewChecked,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, 
+	AfterContentInit, DoCheck, AfterContentChecked, AfterViewChecked, 
+	OnDestroy, ViewEncapsulation } from '@angular/core';
 
-import { CourseItem } from '../../shared/models/course';
+import { CourseItem } from 'src/app/shared/models/course';
 
 @Component({
   selector: 'course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.css']
+  styleUrls: ['./course.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CourseComponent implements OnChanges, OnInit, AfterContentInit, DoCheck,
 AfterContentChecked, AfterViewChecked, OnDestroy {
@@ -32,30 +23,37 @@ AfterContentChecked, AfterViewChecked, OnDestroy {
   }
 
   public ngOnChanges(): void {
-    console.log('OnChanges hook: id = ', this.item.id);
+    /*     console.log('OnChanges hook: id = ', this.item.id);
+     */
   }
 
   public ngOnInit(): void {
-    console.log('OnInit hook');
+    /*     console.log('OnInit hook');
+     */
   }
 
   public ngAfterContentInit(): void {
-    console.log('AfterContentInit hook');
+    /*     console.log('AfterContentInit hook');
+     */
   }
 
   public ngDoCheck(): void {
-    console.log('DoCheck hook');
+    /*     console.log('DoCheck hook');
+     */
   }
 
   public ngAfterContentChecked(): void {
-    console.log('AfterContentChecked hook');
+    /*     console.log('AfterContentChecked hook');
+     */
   }
 
   public ngAfterViewChecked(): void {
-    console.log('AfterContentChecked hook');
+    /*     console.log('AfterContentChecked hook');
+     */
   }
 
   public ngOnDestroy(): void {
-    console.log('OnDestroy hook');
+    /*     console.log('OnDestroy hook');
+     */
   }
 }

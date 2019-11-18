@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { CoursesListComponent } from './courses-list/courses-list.component';
-import { CourseComponent } from './course/course.component';
-import { HoursPipe } from './../shared/pipes/hours-pipe/hours.pipe';
-import { BorderDirective } from './../shared/directives/border.directive';
-import { OrderByPipe } from './../shared/pipes/orderBy/order-by.pipe';
-import { SearchByPipe } from './../shared/pipes/searchBy/search-by.pipe';
+import { CoursesListComponent } from 'src/app/courses/courses-list/courses-list.component';
+import { CourseComponent } from 'src/app/courses/course/course.component';
+import { HoursPipe } from 'src/app/shared/pipes/hours-pipe/hours.pipe';
+import { BorderDirective } from 'src/app/shared/directives/border.directive';
+import { OrderByPipe } from 'src/app/shared/pipes/orderBy/order-by.pipe';
+import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
 
 @NgModule({
   declarations: [

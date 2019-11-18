@@ -7,7 +7,7 @@
   </form>
   <button class="btn btn-primary my-2 my-lg-0" style="align-self: flex-end">+ Add course</button>
 
-  <div *ngIf="courses.length > 0; then thenBlock else elseBlock"></div>
+  <div *ngIf="courses.length; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
     <div *ngFor="let item of courses" class="course" >
       <course [item]="item" (deleteCourse)="onDeleteCourse($event)" appBorder [ngClass]="{'stared': item.topRated}"></course>

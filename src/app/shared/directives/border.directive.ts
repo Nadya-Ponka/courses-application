@@ -1,4 +1,5 @@
-import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import { Directive, ElementRef, Input, HostBinding } from '@angular/core';
+import * as moment from 'moment';
 
 import { CourseItem } from '../../shared/models/course';
 
@@ -6,20 +7,17 @@ import { CourseItem } from '../../shared/models/course';
   selector: '[appBorder]'
 })
 
-export class BorderDirective implements OnChanges {
+export class BorderDirective {
+  @HostBinding('style.border')
+  private border: string;
 
-  constructor(private el: ElementRef) {}
-
-  @Input() item: CourseItem;
-
-  ngOnChanges() {
-    const today = new Date();
-    const twoWeek = new Date();
-    twoWeek.setDate(today.getDate() - 14);
-
-    const childElement = this.el.nativeElement.querySelector('.row');
-    if (this.item.creationDate < today && this.item.creationDate > twoWeek) { childElement.style.border = '1px solid green'; }
-    if (this.item.creationDate > today) { childElement.style.border = '1px solid blue'; }
+  @Input()
+  set item(value: CourseItem) {
+    const daysDiff: number = moment().diff(moment(value.creationDate), 'days');
+    if (daysDiff < 0) {
+      this.border = '2px solid blue';
+    } else if (daysDiff < 15) {
+      this.border = '2px solid green';
+    }
   }
-
 }

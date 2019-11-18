@@ -1,0 +1,30 @@
+.center {
+	width: 100%;
+	text-align: center;
+	vertical-align: center;
+}
+
+.form {
+	margin: 50px auto;
+	width: 400px;
+}
+
+label {
+	display:flex;
+	justify-content: space-between;
+}
+
+label > span {
+	font-weight: 400;
+}
+
+.panel-body {
+	text-align: end;
+}
+
+.forgot {
+	display: inline-block; 
+	margin-right: 50px;
+	color: blue;
+	text-decoration: underline;
+}

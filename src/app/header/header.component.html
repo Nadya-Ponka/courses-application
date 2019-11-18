@@ -1,7 +1,8 @@
 <header>
 	<logo routerLink="/" ></logo>
 	<div class="admin">
-		<label for=""><span class="icon-user"></span><input type="text" placeholder="User login"></label>
-		<button class="btn btn-primary" type="button" style="margin-left:20px;"><span class="icon-exit" ></span>Log off</button>
+		<button class="btn btn-primary" (click)="onLogin()" *ngIf="!authService.isAuthenticated()" 
+			routerLink="/admin" title="Admin"><span class="icon-user"></span>Login</button>
+		<button class="btn btn-primary" (click)="onLogout()" ><span class="icon-exit" ></span>Logout</button>	
 	</div>
 </header>

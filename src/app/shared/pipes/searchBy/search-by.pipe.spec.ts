@@ -1,4 +1,4 @@
-import { SearchByPipe } from './search-by.pipe';
+import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
 
 describe('SearchByPipe', () => {
   it('create an instance', () => {

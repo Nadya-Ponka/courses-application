@@ -1,28 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { LogoComponent } from './header/logo/logo.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AdminModule } from 'src/app/admin/admin.module';
+import { AppComponent } from 'src/app/app.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { BreadcrumbsComponent } from 'src/app/breadcrumbs/breadcrumbs.component';
+import { CoursesModule } from 'src/app/courses/courses.module';
+import { FooterComponent } from 'src/app/footer/footer.component';
+import { HeaderComponent } from 'src/app/header/header.component';
+import { LogoComponent } from 'src/app/header/logo/logo.component';
+import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 
-import { CoursesModule } from './courses/courses.module';
-import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    LogoComponent,
     BreadcrumbsComponent,
+    FooterComponent,
+    HeaderComponent,
+    LogoComponent,
     PageNotFoundComponent
   ],
-  imports: [ BrowserModule, FormsModule, CoursesModule, AppRoutingModule ],
+  imports: [ AdminModule, BrowserModule, CoursesModule, FormsModule, AppRoutingModule ],
   providers: [],
   bootstrap: [AppComponent]
 })

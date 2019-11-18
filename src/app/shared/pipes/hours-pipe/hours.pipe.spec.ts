@@ -1,4 +1,4 @@
-import { HoursPipe } from './hours.pipe';
+import { HoursPipe } from 'src/app/shared/pipes/hours-pipe/hours.pipe';
 
 describe('HoursPipe', () => {
   const pipe: HoursPipe = new HoursPipe();

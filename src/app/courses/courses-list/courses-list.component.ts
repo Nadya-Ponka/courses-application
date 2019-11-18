@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CourseItem } from '../../shared/models/course';
-import { initialCourses } from '../../shared/data/courses';
-import { OrderByPipe } from './../../shared/pipes/orderBy/order-by.pipe';
-import { SearchByPipe } from './../../shared/pipes/searchBy/search-by.pipe';
+import { CourseItem } from 'src/app/shared/models/course';
+import { CoursesService } from 'src/app/courses/services/courses-service.service';
+import { OrderByPipe } from 'src/app/shared/pipes/orderBy/order-by.pipe';
+import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
 
 @Component({
   selector: 'courses-list',
@@ -13,24 +13,28 @@ import { SearchByPipe } from './../../shared/pipes/searchBy/search-by.pipe';
 })
 export class CoursesListComponent implements OnInit {
   public courses: CourseItem[];
+
   constructor(
     private orderByPipe: OrderByPipe,
-    private searchByPipe: SearchByPipe
+    private searchByPipe: SearchByPipe,
+    private coursesService: CoursesService,
   ) {}
 
   public onSearchText(text: string): string {
     console.log('Text for search: ', text);
-    this.courses = this.searchByPipe.transform(initialCourses, text);
+    this.courses = this.searchByPipe.transform(this.coursesService.getList(), text);
     return text;
   }
 
   public onDeleteCourse(event: CourseItem): CourseItem {
     console.log('Course to delete: ', event.id);
-    this.courses = this.courses.filter(el => el.id !== event.id);
+    if (confirm('Do you really want to delete this course? Yes/No')) {
+      this.courses = this.coursesService.removeCourse(event);
+    }
     return event;
   }
 
   public ngOnInit(): void {
-    this.courses = this.orderByPipe.transform(initialCourses);
+    this.courses = this.orderByPipe.transform(this.coursesService.getList(), 'creationDate');
   }
 }

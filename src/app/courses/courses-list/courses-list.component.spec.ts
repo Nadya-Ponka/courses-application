@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { CoursesListComponent } from './courses-list.component';
-import { CourseComponent } from './../course/course.component';
-import { HoursPipe } from './../../shared/pipes/hours-pipe/hours.pipe';
+import { CoursesListComponent } from 'src/app/courses/courses-list/courses-list.component';
+import { CourseComponent } from 'src/app/courses/course/course.component';
+import { HoursPipe } from 'src/app/shared/pipes/hours-pipe/hours.pipe';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;

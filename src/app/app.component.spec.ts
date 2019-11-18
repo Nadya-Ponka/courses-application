@@ -2,7 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from 'src/app/app.component';
 
 let fixture: ComponentFixture < AppComponent > ;
 

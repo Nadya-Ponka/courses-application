@@ -1,0 +1,38 @@
+<div class="center">
+<div class="panel panel-default form">
+  <div class="panel-heading">
+      <h4 class="pannel-title">
+          Login
+      </h4>
+  </div>
+  <div class="panel-body">
+      <form (ngSubmit)="onLogin()" id="task-form" #form="ngForm"> 
+        <div class="form-group">
+          <label for="action">E-mail:<span>*required</span></label>
+          <input type="email"
+              class="form-control"
+              id="email" name="email"
+              placeholder="Enter e-mail"
+              required
+              [(ngModel)]="userinfo.email">
+        </div>
+        <div class="form-group">
+          <label for="priority">Password:<span>*required</span></label>
+          <input type="text"
+              class="form-control"
+              id="password" name="password"
+							placeholder="Enter password"
+							required
+              [(ngModel)]="userinfo.password"> 
+        </div>
+				<div class="forgot">Forgot your password?</div>
+				<button
+            type="submit"
+            class="btn btn-primary"
+            form="task-form"
+            [disabled]="form.invalid" >Login
+        </button>
+      </form>
+  </div>
+</div>
+</div>
