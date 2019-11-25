@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, 
 	AfterContentInit, DoCheck, AfterContentChecked, AfterViewChecked, 
-	OnDestroy, ViewEncapsulation } from '@angular/core';
+	OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 import { CourseItem } from 'src/app/shared/models/course';
 
@@ -8,7 +8,8 @@ import { CourseItem } from 'src/app/shared/models/course';
   selector: 'course',
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.css'],
-  encapsulation: ViewEncapsulation.None
+	encapsulation: ViewEncapsulation.None,
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseComponent implements OnChanges, OnInit, AfterContentInit, DoCheck,
 AfterContentChecked, AfterViewChecked, OnDestroy {

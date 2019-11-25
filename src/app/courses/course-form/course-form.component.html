@@ -1,0 +1,37 @@
+<div class="panel panel-default" style="margin-top:20px;">
+  <div class="panel-heading">
+    <h4 class="pannel-title">Edit Item:</h4>
+  </div>
+  <div class="panel-body">
+    <form (ngSubmit)="onSaveItem()" id="course-form" #form="ngForm">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Course title" required
+              [(ngModel)]="item.title">
+          </div>
+        <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea type="text" class="form-control" id="description" name="description" placeholder="Course description" required
+          [(ngModel)]="item.description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="creationDate">Date:</label>
+				<input type="date" class="form-control" id="creationDate" name="creationDate" [(ngModel)]="item.creationDate">
+      </div>
+      <div class="form-group">
+        <label for="price">Duration:</label>
+        <input type="number" class="form-control" id="duration" name="duration" placeholder="Course duration in minutes"
+          [(ngModel)]="item.duration">
+      </div>
+      <div class="form-group">
+          <label for="category">Author:</label>
+          <input type="number" class="form-control" id="category" name="category" placeholder="Change available"
+            [(ngModel)]="item.category">
+        </div>
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid" style="margin-right: 25px;">Save
+      </button>
+      <button class="btn btn-primary" type="button" (click)="onGoBack()">Cancel
+      </button>
+    </form>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent } from 'src/app/admin/admin.component';
 import { CoursesListComponent } from 'src/app/courses/courses-list/courses-list.component';
+import { CourseFormComponent } from 'src/app/courses/course-form/course-form.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 
 const routes: Routes = [{
@@ -13,7 +14,11 @@ const routes: Routes = [{
     path: '',
     redirectTo: '/courses',
     pathMatch: 'full'
-  },
+	},
+	{
+		path: 'courses/add',
+		component: CourseFormComponent
+	},
   {
     path: 'admin',
     pathMatch: 'full',

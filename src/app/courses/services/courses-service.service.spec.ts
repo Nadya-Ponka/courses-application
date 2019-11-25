@@ -1,4 +1,4 @@
-import { CoursesService } from 'src/app/courses/services/courses-service.service';
+import { CoursesService } from 'src/app/courses/services/courses-service';
 import { initialCourses } from 'src/app/shared/data/courses';
 
 describe('CoursesService', () => {

@@ -3,6 +3,7 @@
 	<div class="admin">
 		<button class="btn btn-primary" (click)="onLogin()" *ngIf="!authService.isAuthenticated()" 
 			routerLink="/admin" title="Admin"><span class="icon-user"></span>Login</button>
-		<button class="btn btn-primary" (click)="onLogout()" ><span class="icon-exit" ></span>Logout</button>	
+		<button class="btn btn-primary" (click)="onLogout()" *ngIf="authService.isAuthenticated()">
+			<span class="icon-exit" ></span>Logout</button>	
 	</div>
 </header>

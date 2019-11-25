@@ -8,6 +8,7 @@ import { HoursPipe } from 'src/app/shared/pipes/hours-pipe/hours.pipe';
 import { BorderDirective } from 'src/app/shared/directives/border.directive';
 import { OrderByPipe } from 'src/app/shared/pipes/orderBy/order-by.pipe';
 import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
+import { CourseFormComponent } from './course-form/course-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
     HoursPipe,
     BorderDirective,
     OrderByPipe,
-    SearchByPipe
+    SearchByPipe,
+    CourseFormComponent
   ],
   imports: [
     CommonModule, FormsModule

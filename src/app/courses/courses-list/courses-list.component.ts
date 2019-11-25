@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CourseItem } from 'src/app/shared/models/course';
-import { CoursesService } from 'src/app/courses/services/courses-service.service';
+import { CoursesService } from 'src/app/courses/services/courses-service';
 import { OrderByPipe } from 'src/app/shared/pipes/orderBy/order-by.pipe';
 import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
 
@@ -13,11 +14,13 @@ import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
 })
 export class CoursesListComponent implements OnInit {
   public courses: CourseItem[];
-
+	public searchText: string;
+	
   constructor(
-    private orderByPipe: OrderByPipe,
+		private orderByPipe: OrderByPipe,
+		private router: Router,
     private searchByPipe: SearchByPipe,
-    private coursesService: CoursesService,
+    private coursesService: CoursesService
   ) {}
 
   public onSearchText(text: string): string {
@@ -34,6 +37,11 @@ export class CoursesListComponent implements OnInit {
     return event;
   }
 
+	public onCreateCourse() {
+    const link = ['/courses/add'];
+    this.router.navigate(link);
+	}
+	
   public ngOnInit(): void {
     this.courses = this.orderByPipe.transform(this.coursesService.getList(), 'creationDate');
   }

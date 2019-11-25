@@ -97,3 +97,7 @@ courses-list {
 	height: inherit;
 	background-color: #f2f3f7;
 }
+
+app-course-form {
+	height: inherit;
+}

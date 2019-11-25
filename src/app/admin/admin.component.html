@@ -8,13 +8,13 @@
   <div class="panel-body">
       <form (ngSubmit)="onLogin()" id="task-form" #form="ngForm"> 
         <div class="form-group">
-          <label for="action">E-mail:<span>*required</span></label>
-          <input type="email"
+          <label for="action">Login:<span>*required</span></label>
+          <input type="text"
               class="form-control"
-              id="email" name="email"
-              placeholder="Enter e-mail"
+              id="login" name="login"
+              placeholder="Enter login"
               required
-              [(ngModel)]="userinfo.email">
+              [(ngModel)]="userinfo.login">
         </div>
         <div class="form-group">
           <label for="priority">Password:<span>*required</span></label>

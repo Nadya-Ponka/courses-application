@@ -9,7 +9,7 @@ import { CourseItem } from '../../shared/models/course';
 
 export class BorderDirective {
   @HostBinding('style.border')
-  private border: string;
+  public border: string;
 
   @Input()
   set item(value: CourseItem) {

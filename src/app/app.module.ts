@@ -12,7 +12,8 @@ import { FooterComponent } from 'src/app/footer/footer.component';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { LogoComponent } from 'src/app/header/logo/logo.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
-
+import { RouterLinkStubDirective } from 'src/app/testing-helpers/router-stubs';
+import { RouterOutletStubComponent } from 'src/app/testing-helpers/router-stubs';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.com
     FooterComponent,
     HeaderComponent,
     LogoComponent,
-    PageNotFoundComponent
+		PageNotFoundComponent,
+		RouterLinkStubDirective,
+		RouterOutletStubComponent
   ],
   imports: [ AdminModule, BrowserModule, CoursesModule, FormsModule, AppRoutingModule ],
   providers: [],

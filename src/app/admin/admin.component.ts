@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
   public userinfo = {
-    email: '',
+    login: '',
     password: ''
   };
   constructor(
@@ -20,7 +20,6 @@ export class AdminComponent implements OnInit {
 
   public onLogin() {
     this.authService.login(this.userinfo);
-    console.log('Logged in successfully');
     this.router.navigate(['/courses']);
   }
 
