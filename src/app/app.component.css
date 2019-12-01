@@ -98,6 +98,6 @@ courses-list {
 	background-color: #f2f3f7;
 }
 
-app-course-form {
+app-course-form, app-page-not-found {
 	height: inherit;
 }

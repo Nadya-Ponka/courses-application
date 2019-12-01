@@ -2,23 +2,30 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent } from 'src/app/admin/admin.component';
+import { AuthGuard } from './admin/guards/auth.guard';
 import { CoursesListComponent } from 'src/app/courses/courses-list/courses-list.component';
 import { CourseFormComponent } from 'src/app/courses/course-form/course-form.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 
 const routes: Routes = [{
+    path: '',
+    redirectTo: '/courses',
+    pathMatch: 'full'
+  },
+  {
     path: 'courses',
     component: CoursesListComponent
   },
   {
-    path: '',
-    redirectTo: '/courses',
-    pathMatch: 'full'
-	},
-	{
-		path: 'courses/add',
-		component: CourseFormComponent
-	},
+    path: 'courses/add',
+    canActivate: [AuthGuard],
+    component: CourseFormComponent
+  },
+  {
+    path: 'courses/:id',
+    canActivate: [AuthGuard],
+    component: CourseFormComponent
+  },
   {
     path: 'admin',
     pathMatch: 'full',

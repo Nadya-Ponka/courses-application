@@ -1,6 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, 
-	AfterContentInit, DoCheck, AfterContentChecked, AfterViewChecked, 
-	OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, AfterContentInit, DoCheck, AfterContentChecked, AfterViewChecked, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 import { CourseItem } from 'src/app/shared/models/course';
 
@@ -8,19 +6,24 @@ import { CourseItem } from 'src/app/shared/models/course';
   selector: 'course',
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.css'],
-	encapsulation: ViewEncapsulation.None,
-	changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseComponent implements OnChanges, OnInit, AfterContentInit, DoCheck,
 AfterContentChecked, AfterViewChecked, OnDestroy {
   @Input() item: CourseItem;
   @Output() deleteCourse = new EventEmitter < CourseItem > ();
+  @Output() editCourse = new EventEmitter < CourseItem > ();
 
   public searchText: string;
   constructor() {}
 
   public onDelete(): void {
     this.deleteCourse.emit(this.item);
+  }
+
+  public onEdit(): void {
+    this.editCourse.emit(this.item);
   }
 
   public ngOnChanges(): void {

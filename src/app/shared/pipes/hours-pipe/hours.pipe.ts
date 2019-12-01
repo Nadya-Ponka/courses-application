@@ -10,7 +10,7 @@ export class HoursPipe implements PipeTransform {
     } else if (value > 0 && value / 60 < 1) {
       return value + ' Minutes';
     } else {
-      return Math.round(value / 60) + ' Hour(s) ' + (value % 60) + ' Minutes';
+      return Math.trunc(value / 60) + ' Hour(s) ' + (value % 60) + ' Minutes';
     }
   }
 }

@@ -14,11 +14,11 @@ import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
 })
 export class CoursesListComponent implements OnInit {
   public courses: CourseItem[];
-	public searchText: string;
-	
+  public searchText: string;
+
   constructor(
-		private orderByPipe: OrderByPipe,
-		private router: Router,
+    private orderByPipe: OrderByPipe,
+    private router: Router,
     private searchByPipe: SearchByPipe,
     private coursesService: CoursesService
   ) {}
@@ -30,18 +30,22 @@ export class CoursesListComponent implements OnInit {
   }
 
   public onDeleteCourse(event: CourseItem): CourseItem {
-    console.log('Course to delete: ', event.id);
     if (confirm('Do you really want to delete this course? Yes/No')) {
       this.courses = this.coursesService.removeCourse(event);
     }
     return event;
   }
 
-	public onCreateCourse() {
+  public onCreateCourse() {
     const link = ['/courses/add'];
     this.router.navigate(link);
-	}
-	
+  }
+
+  public onEditCourse(item: CourseItem) {
+    const link = [`/courses/${item.id}`];
+    this.router.navigate(link);
+  }
+
   public ngOnInit(): void {
     this.courses = this.orderByPipe.transform(this.coursesService.getList(), 'creationDate');
   }

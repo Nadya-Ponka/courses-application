@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'breadcrumbs',
@@ -6,8 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./breadcrumbs.component.css']
 })
 export class BreadcrumbsComponent implements OnInit {
+  public currentRoute;
+  constructor(private router: Router) {}
 
-  constructor() { }
+  public ngOnInit(): void {
+    console.log('router: ', this.router);
+    this.currentRoute = this.router.routerState.snapshot.url;
+  }
 
-  public ngOnInit(): void {}
+  public ngDoCheck(): void {
+    this.currentRoute = this.router.routerState.snapshot.url;
+  }
 }

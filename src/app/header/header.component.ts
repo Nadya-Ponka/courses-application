@@ -9,8 +9,8 @@ import { AuthService } from 'src/app/admin/services/auth-service.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-	public isLogged: boolean;
-	
+  public isLogged: boolean;
+
   constructor(
     public authService: AuthService,
     private router: Router,

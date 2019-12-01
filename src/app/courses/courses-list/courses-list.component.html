@@ -10,7 +10,10 @@
   <div *ngIf="courses.length; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
     <div *ngFor="let item of courses" class="course" >
-      <course [item]="item" (deleteCourse)="onDeleteCourse($event)" appBorder [ngClass]="{'stared': item.topRated}"></course>
+			<course [item]="item" (deleteCourse)="onDeleteCourse($event)" 
+				(editCourse)="onEditCourse(item)"
+				appBorder [ngClass]="{'stared': item.topRated}">
+			</course>
     </div>
     <button class="btn btn-secondary" type="button" (click)="false">Show more</button>
   </ng-template>

@@ -50,3 +50,8 @@ hr {
   height: 10px;
   z-index: -10;
 }
+
+.container {
+	height: 75px;
+	line-height: 5;
+}

@@ -22,11 +22,11 @@ import { RouterOutletStubComponent } from 'src/app/testing-helpers/router-stubs'
     FooterComponent,
     HeaderComponent,
     LogoComponent,
-		PageNotFoundComponent,
-		RouterLinkStubDirective,
-		RouterOutletStubComponent
+    PageNotFoundComponent,
+    RouterLinkStubDirective,
+    RouterOutletStubComponent
   ],
-  imports: [ AdminModule, BrowserModule, CoursesModule, FormsModule, AppRoutingModule ],
+  imports: [AdminModule, BrowserModule, CoursesModule, FormsModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -13,21 +13,36 @@ export class CourseFormComponent implements OnInit {
   public item: CourseItem;
 
   constructor(
-		private coursesService: CoursesService,
-		private router: Router
-	) { }
+    private coursesService: CoursesService,
+    private router: Router
+  ) {}
 
-	public onSaveItem() {
-		this.coursesService.createCourse(this.item);
-		this.onGoBack();
-	}
+  public onSaveItem() {
+    if (this.item.id === undefined) {
+      this.item.id = this.coursesService.getList().length;
+    }
+    this.coursesService.updateCourse(this.item);
+    this.onGoBack();
+  }
 
-	public onGoBack() {
+  public onGoBack() {
     this.router.navigate(['/courses']);
   }
 
   public ngOnInit() {
-		this.item = new CourseItem(this.coursesService.getList().length, '', false, new Date(), 0, '', '');
+    let url = this.router.routerState.snapshot.url;
+    const navigatedForEdit = /\/courses\/add/.test(url);
+    let id: number;
+    if (!navigatedForEdit) {
+      url = url.slice(9);
+      id = +url;
+    }
+
+    if (id != undefined) {
+      this.item = this.coursesService.getCourseByID(id);
+    } else {
+      this.item = new CourseItem(this.coursesService.getList().length, '', false, new Date(), 0, '', '');
+    }
   }
 
 }

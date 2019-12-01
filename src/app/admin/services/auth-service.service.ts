@@ -9,21 +9,19 @@ import { UserItem } from 'src/app/shared/models/user';
 
 export class AuthService {
   public isLoggedIn = false;
-	public userID = 0;
-	private users: Array<UserItem> = [...initialUsers];
+  public userID = 0;
+  private users: Array < UserItem > = [...initialUsers];
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
   login(userinfo): void {
-    setTimeout(() => {
-			const currentUser = this.users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
-			if (currentUser) {
-				console.log('Logged in successfully: ', userinfo);
-				localStorage.setItem('userinfo', JSON.stringify(userinfo));
-				this.isLoggedIn = true;
-			}		
-    }, 1000);
+    const currentUser = this.users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
+    if (currentUser) {
+      console.log('Logged in successfully: ', userinfo);
+      localStorage.setItem('userinfo', JSON.stringify(userinfo));
+      this.isLoggedIn = true;
+    }
   }
 
   logout(): void {
@@ -33,12 +31,12 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-		return this.isLoggedIn = !!localStorage.getItem("userinfo");
+    return this.isLoggedIn = !!localStorage.getItem('userinfo');
   }
 
   getUserInfo(): string {
-		console.log('Get userInfo from localStorage: ', localStorage.getItem('userinfo'));
-		return this.users.find(el =>  el.login === localStorage.getItem("userinfo")).login;
+    console.log('Get userInfo from localStorage: ', localStorage.getItem('userinfo'));
+    return this.users.find(el => el.login === localStorage.getItem('userinfo')).login;
 
   }
 }
