@@ -1,8 +1,10 @@
 export interface IUser {
   id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
+  token: string;
+  name: {
+    firstName: string,
+    lastName: string
+  };
   login: string;
   password: string;
 }
@@ -10,9 +12,11 @@ export interface IUser {
 export class UserItem implements IUser {
   constructor(
     public id: number,
-    public firstName: string = '',
-    public lastName: string = '',
-    public email: string = '',
+    public token: string,
+    public name: {
+      firstName: string,
+      lastName: string
+    },
     public login: string = '',
     public password: string = '',
   ) {}

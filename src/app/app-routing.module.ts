@@ -14,17 +14,22 @@ const routes: Routes = [{
   },
   {
     path: 'courses',
-    component: CoursesListComponent
-  },
-  {
-    path: 'courses/add',
-    canActivate: [AuthGuard],
-    component: CourseFormComponent
-  },
-  {
-    path: 'courses/:id',
-    canActivate: [AuthGuard],
-    component: CourseFormComponent
+    children: [{
+        path: '',
+        component: CoursesListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'add',
+        component: CourseFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: ':id',
+        component: CourseFormComponent,
+        canActivate: [AuthGuard]
+      }
+    ]
   },
   {
     path: 'admin',

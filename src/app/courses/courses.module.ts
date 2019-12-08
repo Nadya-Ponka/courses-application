@@ -9,6 +9,8 @@ import { BorderDirective } from 'src/app/shared/directives/border.directive';
 import { OrderByPipe } from 'src/app/shared/pipes/orderBy/order-by.pipe';
 import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
 import { CourseFormComponent } from './course-form/course-form.component';
+import { CoursesAPIProvider } from 'src/app/courses/services/courses.config';
+import { CoursesObservableService } from './services/courses-observable.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,9 @@ import { CourseFormComponent } from './course-form/course-form.component';
   ],
   exports: [
     CoursesListComponent
+  ],
+  providers: [
+    CoursesAPIProvider, CoursesObservableService
   ]
 })
 export class CoursesModule {}

@@ -8,11 +8,13 @@ import { Router } from '@angular/router';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+
 export class AdminComponent implements OnInit {
   public userinfo = {
     login: '',
     password: ''
   };
+
   constructor(
     private authService: AuthService,
     private router: Router

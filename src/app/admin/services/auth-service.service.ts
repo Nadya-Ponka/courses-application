@@ -1,7 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
-import { initialUsers } from 'src/app/shared/data/usersMock';
 import { UserItem } from 'src/app/shared/models/user';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+import { CoursesAPI } from 'src/app/courses/services/courses.config';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +14,42 @@ import { UserItem } from 'src/app/shared/models/user';
 export class AuthService {
   public isLoggedIn = false;
   public userID = 0;
-  private users: Array < UserItem > = [...initialUsers];
+  private users: UserItem[];
 
-  // store the URL so we can redirect after logging in
-  redirectUrl: string;
+  constructor(
+    private http: HttpClient,
+    @Inject(CoursesAPI) private coursesBaseUrl: string
+  ) {
+    this.getUsers().subscribe(data => {
+      this.users = data;
+    });
+  }
 
-  login(userinfo): void {
+  public getUsers() {
+    const url = this.coursesBaseUrl + `users`;
+    return this.http.get < [] > (url);
+  }
+
+  public getUser() {
+    const url = this.coursesBaseUrl + `users`;
+    return this.http.get < [] > (url);
+  }
+
+  async login(userinfo) {
     const currentUser = this.users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
+
     if (currentUser) {
-      console.log('Logged in successfully: ', userinfo);
-      localStorage.setItem('userinfo', JSON.stringify(userinfo));
-      this.isLoggedIn = true;
+      let token: {};
+      this.getUserInfo(userinfo).subscribe(data => {
+        token = data;
+      });
+      setTimeout(() => {
+        console.log('Logged in successfully: ', token);
+        localStorage.setItem('userinfo', JSON.stringify(token));
+
+        this.isLoggedIn = true;
+      }, 500);
+      localStorage.setItem('userinfo', JSON.stringify(token));
     }
   }
 
@@ -34,9 +63,32 @@ export class AuthService {
     return this.isLoggedIn = !!localStorage.getItem('userinfo');
   }
 
-  getUserInfo(): string {
-    console.log('Get userInfo from localStorage: ', localStorage.getItem('userinfo'));
-    return this.users.find(el => el.login === localStorage.getItem('userinfo')).login;
+  getUserInfo(userinfo) {
+    const url = this.coursesBaseUrl + `auth/login`;
+    const body = JSON.stringify(userinfo);
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
 
+    return this.http.post(url, body, options)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
+
+  private handleError(err: HttpErrorResponse) {
+    // A client-side or network error occurred.
+    if (err.error instanceof Error) {
+      console.error('An error occurred:', err.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
+    }
+
+    return throwError('Something bad happened; please try again later.');
+  }
+
 }

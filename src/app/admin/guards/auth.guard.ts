@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, NavigationExtras } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../services/auth-service.service';
@@ -33,20 +33,9 @@ export class AuthGuard implements CanActivate {
     // Store the attempted URL for redirecting
     this.authService.redirectUrl = url;
 
-    // Create a dummy session id
-    const sessionId = 123456789;
-
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        sessionId
-      },
-      fragment: 'anchor'
-    };
-
     // Navigate to the login page, return UrlTree
     // return this.router.parseUrl('/login');
-    this.router.navigate(['/admin'], navigationExtras);
+    this.router.navigate(['/admin']);
     return false;
   }
-
 }

@@ -5,7 +5,7 @@ export interface ICourse {
   creationDate: Date;
   duration: number;
   description: string;
-  category: string;
+  authors: string[];
 }
 
 export class CourseItem implements ICourse {
@@ -16,6 +16,6 @@ export class CourseItem implements ICourse {
     public creationDate: Date,
     public duration: number,
     public description: string,
-    public category: string
+    public authors: string[]
   ) {}
 }

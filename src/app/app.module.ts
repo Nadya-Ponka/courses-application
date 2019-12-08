@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AdminModule } from 'src/app/admin/admin.module';
 import { AppComponent } from 'src/app/app.component';
@@ -26,7 +27,7 @@ import { RouterOutletStubComponent } from 'src/app/testing-helpers/router-stubs'
     RouterLinkStubDirective,
     RouterOutletStubComponent
   ],
-  imports: [AdminModule, BrowserModule, CoursesModule, FormsModule, AppRoutingModule],
+  imports: [AdminModule, BrowserModule, CoursesModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent]
 })
