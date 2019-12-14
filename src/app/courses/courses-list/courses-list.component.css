@@ -29,3 +29,7 @@ course {
 .stared /* div.row.element  */{
 	background-color: #DCEAE6 !important;
 }
+
+.form-control {
+	width: 300px;
+}

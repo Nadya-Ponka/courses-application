@@ -2,11 +2,10 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry, switchMap } from 'rxjs/operators';
+import { catchError, retry, switchMap, map, tap } from 'rxjs/operators';
 
 import { CoursesAPI } from 'src/app/courses/services/courses.config';
 import { CourseItem } from 'src/app/shared/models/course';
-import { CoursesService } from 'src/app/courses/services/courses-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,20 +13,73 @@ import { CoursesService } from 'src/app/courses/services/courses-service';
 
 export class CoursesObservableService {
   constructor(
-    private coursesService: CoursesService,
     private http: HttpClient,
     @Inject(CoursesAPI) private coursesBaseUrl: string
   ) {}
 
-  getList(startIndex: number, amount: number, searchInCourses: string): Observable < [] > {
-    return this.http.get < [] > (this.coursesBaseUrl + `courses?start=${startIndex}&count=${amount}&textFragment=${searchInCourses}`);
+	getFullList() {
+		const url = this.coursesBaseUrl + `courses`;
+		return this.http.get(url)
+		.pipe(
+			map((courses: Array<any>) => {
+				const c = courses.map(course => {
+					const result = new CourseItem(
+						course.id,
+						course.name,
+						course.isTopRated,
+						course.date,
+						course.length,
+						course.description,
+						course.authors
+					);
+					return result;
+				});
+
+				return c;
+			})
+		);;
+	}
+
+  getList(startIndex: number, amount: number, searchInCourses: string) {
+		return this.http.get < [] > (this.coursesBaseUrl + `courses?start=${startIndex}&count=${amount}&textFragment=${searchInCourses}`)
+		.pipe(
+			map((courses: Array<any>) => {
+				const c = courses.map(course => {
+					const result = new CourseItem(
+						course.id,
+						course.name,
+						course.isTopRated,
+						course.date,
+						course.length,
+						course.description,
+						course.authors
+					);
+					return result;
+				});
+
+				return c;
+			})
+		);
   }
 
-  getCourse(id: number): Observable < CourseItem > {
-    const url = `${this.coursesBaseUrl}/${id}`;
-    return this.http.get < CourseItem > (url)
+  getCourseByID(id: number): Observable <CourseItem> {
+    const url = `${this.coursesBaseUrl}courses/${id}`;
+    return this.http.get(url)
       .pipe(
-        retry(3),
+        map((course: any) => {
+					console.log('Ответ в бэкенда: ', course);
+            const result = {
+							id: course.id,
+							title: course.name,
+							topRated: course.isTopRated,
+							creationDate: course.date,
+							duration: course.length,
+							description: course.description,
+							authors: course.authors
+						};
+						console.log('RESULT: ', result);
+            return result;
+          }),
         catchError(this.handleError)
       );
   }
@@ -50,8 +102,7 @@ export class CoursesObservableService {
       })
     };
 
-    return this.http
-      .put < CourseItem > (url, toBody, options)
+    return this.http.put < CourseItem > (url, toBody, options)
       .pipe(catchError(this.handleError));
   }
 
@@ -73,18 +124,18 @@ export class CoursesObservableService {
       })
     };
 
-    return this.http
-      .post(url, body, options)
-      .pipe(
-        catchError(this.handleError)
+    return this.http.post(url, body, options)
+			.pipe(
+				switchMap(() => this.getFullList()),
+				catchError(this.handleError)
       );
   }
 
-  removeCourse(course: CourseItem) {
+  removeCourse(course: CourseItem, listLength: number) {
     const url = this.coursesBaseUrl + `courses/${course.id}`;
     return this.http.delete(url)
       .pipe(
-        switchMap(() => this.getList(0, this.coursesService.getList().length - 1, '')),
+        switchMap(() => this.getList(0, listLength - 1, '')),
         catchError(this.handleError)
       );
   }

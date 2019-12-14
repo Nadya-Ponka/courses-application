@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 
 import { UserItem } from 'src/app/shared/models/user';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { CoursesAPI } from 'src/app/courses/services/courses.config';
 
@@ -14,20 +14,19 @@ import { CoursesAPI } from 'src/app/courses/services/courses.config';
 export class AuthService {
   public isLoggedIn = false;
   public userID = 0;
-  private users: UserItem[];
 
   constructor(
     private http: HttpClient,
     @Inject(CoursesAPI) private coursesBaseUrl: string
   ) {
-    this.getUsers().subscribe(data => {
-      this.users = data;
-    });
+    // this.getAllUsers().subscribe(data => {
+    //   this.users = data;
+    // });
   }
 
-  public getUsers() {
-    const url = this.coursesBaseUrl + `users`;
-    return this.http.get < [] > (url);
+  public getAllUsers() {
+    const url = this.coursesBaseUrl + 'users';
+    return this.http.get(url);
   }
 
   public getUser() {
@@ -35,22 +34,33 @@ export class AuthService {
     return this.http.get < [] > (url);
   }
 
-  async login(userinfo) {
-    const currentUser = this.users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
+  public login(userinfo) {
+		return this.getAllUsers().
+		pipe(
+			map((users: Array<UserItem>) => {
+				const currentUser = users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
+				if (currentUser) {
+    	    localStorage.setItem('userinfo', JSON.stringify(currentUser.name.firstName));
+					localStorage.setItem('fakeToken', JSON.stringify(currentUser.token));
+					this.isLoggedIn = true;
+					return currentUser;
+				}})
+		);
+    // const currentUser = this.users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
 
-    if (currentUser) {
-      let token: {};
-      this.getUserInfo(userinfo).subscribe(data => {
-        token = data;
-      });
-      setTimeout(() => {
-        console.log('Logged in successfully: ', token);
-        localStorage.setItem('userinfo', JSON.stringify(token));
+    // if (currentUser) {
+    //   let token: {};
+    //   this.getUserInfo(userinfo).subscribe(data => {
+    //     token = data;
+    //   });
+    //   setTimeout(() => {
+    //     console.log('Logged in successfully: ', token);
+    //     localStorage.setItem('userinfo', JSON.stringify(token));
 
-        this.isLoggedIn = true;
-      }, 500);
-      localStorage.setItem('userinfo', JSON.stringify(token));
-    }
+    //     this.isLoggedIn = true;
+    //   }, 500);
+    //   localStorage.setItem('userinfo', JSON.stringify(token));
+    // }
   }
 
   logout(): void {
