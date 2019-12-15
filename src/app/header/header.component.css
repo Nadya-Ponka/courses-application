@@ -32,3 +32,8 @@ input::placeholder {
 	border: 0;
 	font-weight: 700;
 }
+
+.user-info {
+	color:#FFF;
+	font-weight: 700;
+}

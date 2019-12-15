@@ -1,11 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry, switchMap, map, tap } from 'rxjs/operators';
+import { Observable, throwError, interval } from 'rxjs';
+import { catchError, delay, switchMap, map, debounce } from 'rxjs/operators';
 
 import { CoursesAPI } from 'src/app/courses/services/courses.config';
 import { CourseItem } from 'src/app/shared/models/course';
+import { SpinnerService } from 'src/app/widgets';
 
 @Injectable({
   providedIn: 'root'
@@ -13,36 +14,43 @@ import { CourseItem } from 'src/app/shared/models/course';
 
 export class CoursesObservableService {
   constructor(
-    private http: HttpClient,
+		private http: HttpClient,
+		public spinnerService: SpinnerService,
     @Inject(CoursesAPI) private coursesBaseUrl: string
   ) {}
 
 	getFullList() {
 		const url = this.coursesBaseUrl + `courses`;
+		this.spinnerService.show();
 		return this.http.get(url)
 		.pipe(
+			delay(2000),
 			map((courses: Array<any>) => {
-				const c = courses.map(course => {
-					const result = new CourseItem(
-						course.id,
-						course.name,
-						course.isTopRated,
-						course.date,
-						course.length,
-						course.description,
-						course.authors
-					);
-					return result;
-				});
+					const c = courses.map(course => {
+						const result = new CourseItem(
+							course.id,
+							course.name,
+							course.isTopRated,
+							course.date,
+							course.length,
+							course.description,
+							course.authors
+						);
 
-				return c;
+						return result;
+					});
+		
+					return c;
 			})
 		);;
 	}
 
   getList(startIndex: number, amount: number, searchInCourses: string) {
+		this.spinnerService.show();
+
 		return this.http.get < [] > (this.coursesBaseUrl + `courses?start=${startIndex}&count=${amount}&textFragment=${searchInCourses}`)
 		.pipe(
+			delay(2000),
 			map((courses: Array<any>) => {
 				const c = courses.map(course => {
 					const result = new CourseItem(
@@ -57,12 +65,15 @@ export class CoursesObservableService {
 					return result;
 				});
 
+				this.spinnerService.hide();
 				return c;
 			})
 		);
   }
 
   getCourseByID(id: number): Observable <CourseItem> {
+		this.spinnerService.show();
+
     const url = `${this.coursesBaseUrl}courses/${id}`;
     return this.http.get(url)
       .pipe(
@@ -78,6 +89,7 @@ export class CoursesObservableService {
 							authors: course.authors
 						};
 						console.log('RESULT: ', result);
+						this.spinnerService.hide();
             return result;
           }),
         catchError(this.handleError)
@@ -85,6 +97,8 @@ export class CoursesObservableService {
   }
 
   updateCourse(course: CourseItem): Observable < CourseItem > {
+		this.spinnerService.show();
+
     const url = `${this.coursesBaseUrl}courses/${course.id}`;
     const toBody = {
       id: course.id,
@@ -107,6 +121,8 @@ export class CoursesObservableService {
   }
 
   createCourse(course: CourseItem) {
+		this.spinnerService.show();
+
     const url = this.coursesBaseUrl + 'courses';
     const toBody = {
       id: course.id,
@@ -132,6 +148,8 @@ export class CoursesObservableService {
   }
 
   removeCourse(course: CourseItem, listLength: number) {
+		this.spinnerService.show();
+
     const url = this.coursesBaseUrl + `courses/${course.id}`;
     return this.http.delete(url)
       .pipe(

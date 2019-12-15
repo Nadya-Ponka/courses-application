@@ -18,11 +18,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     @Inject(CoursesAPI) private coursesBaseUrl: string
-  ) {
-    // this.getAllUsers().subscribe(data => {
-    //   this.users = data;
-    // });
-  }
+  ) {}
 
   public getAllUsers() {
     const url = this.coursesBaseUrl + 'users';
@@ -37,13 +33,27 @@ export class AuthService {
   public login(userinfo) {
 		return this.getAllUsers().
 		pipe(
-			map((users: Array<UserItem>) => {
+			map((users: Array<any>) => {
 				const currentUser = users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
 				if (currentUser) {
-    	    localStorage.setItem('userinfo', JSON.stringify(currentUser.name.firstName));
-					localStorage.setItem('fakeToken', JSON.stringify(currentUser.token));
+					const info = {
+						id: currentUser.id,
+						token: currentUser.fakeToken,
+						name: {
+							firstName: currentUser.name.first,
+							lastName: currentUser.name.last
+						},
+						login: currentUser.login,
+						password: currentUser.password
+					}
+
+					console.log('USER: ', currentUser);
+					console.log('INFO: ', info);
+
+    	    localStorage.setItem('userinfo', JSON.stringify(info.name.firstName));
+					localStorage.setItem('fakeToken', JSON.stringify(info.token));
 					this.isLoggedIn = true;
-					return currentUser;
+					return info;
 				}})
 		);
     // const currentUser = this.users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
@@ -69,7 +79,7 @@ export class AuthService {
     console.log('Log Out action');
   }
 
-  isAuthenticated(): boolean {
+  isAuthenticated(): any {
     return this.isLoggedIn = !!localStorage.getItem('userinfo');
   }
 

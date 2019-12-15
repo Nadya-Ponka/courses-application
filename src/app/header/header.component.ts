@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
+import { Observable, Subject, interval } from 'rxjs';
+
 import { AuthService } from 'src/app/admin/services/auth-service.service';
 
 @Component({
@@ -10,6 +12,7 @@ import { AuthService } from 'src/app/admin/services/auth-service.service';
 })
 export class HeaderComponent implements OnInit {
   public isLogged: boolean;
+	public userInfo;
 
   constructor(
     public authService: AuthService,
@@ -17,10 +20,24 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+		// this.userInfo = localStorage.getItem('userinfo');
+		this.userInfo = new Subject();
+		this.userInfo.pipe(
+		 ).subscribe({
+			next: () => {
+				localStorage.getItem('userinfo')
+			}
+		});
 
-  public onLogin() {
-    this.router.navigate(['/admin']);
+	}
+
+  public ngDoCheck(): void {
+		this.userInfo = localStorage.getItem('userinfo');
+  }
+
+	public onLogin() {
+		this.router.navigate(['/admin']);
   }
 
   public onLogout() {

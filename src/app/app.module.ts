@@ -15,6 +15,7 @@ import { LogoComponent } from 'src/app/header/logo/logo.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 import { RouterLinkStubDirective } from 'src/app/testing-helpers/router-stubs';
 import { RouterOutletStubComponent } from 'src/app/testing-helpers/router-stubs';
+import { SpinnerModule } from 'src/app/widgets/spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,9 @@ import { RouterOutletStubComponent } from 'src/app/testing-helpers/router-stubs'
     LogoComponent,
     PageNotFoundComponent,
     RouterLinkStubDirective,
-    RouterOutletStubComponent
+		RouterOutletStubComponent,
   ],
-  imports: [AdminModule, BrowserModule, CoursesModule, FormsModule, HttpClientModule, AppRoutingModule],
+  imports: [AdminModule, BrowserModule, CoursesModule, FormsModule, HttpClientModule, SpinnerModule.forRoot(), AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent]
 })

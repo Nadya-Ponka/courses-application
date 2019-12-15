@@ -11,6 +11,7 @@ import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { CoursesAPIProvider } from 'src/app/courses/services/courses.config';
 import { CoursesObservableService } from './services/courses-observable.service';
+import { SpinnerModule } from 'src/app/widgets/spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { CoursesObservableService } from './services/courses-observable.service'
     CourseFormComponent
   ],
   imports: [
-    CommonModule, FormsModule
+    CommonModule, FormsModule, SpinnerModule
   ],
   exports: [
     CoursesListComponent
