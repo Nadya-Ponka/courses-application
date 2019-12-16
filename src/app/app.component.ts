@@ -13,11 +13,9 @@ export class AppComponent {
   public title = 'courses-application';
 
   constructor(
-		public authService: AuthService,
-		public spinnerService: SpinnerService
+    public authService: AuthService,
+    public spinnerService: SpinnerService
   ) {}
 
-  ngOnInit() {
-		this.spinnerService.show();
-	}
+  ngOnInit() {}
 }

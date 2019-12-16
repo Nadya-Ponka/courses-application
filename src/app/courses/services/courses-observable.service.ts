@@ -14,90 +14,90 @@ import { SpinnerService } from 'src/app/widgets';
 
 export class CoursesObservableService {
   constructor(
-		private http: HttpClient,
-		public spinnerService: SpinnerService,
+    private http: HttpClient,
+    public spinnerService: SpinnerService,
     @Inject(CoursesAPI) private coursesBaseUrl: string
   ) {}
 
-	getFullList() {
-		const url = this.coursesBaseUrl + `courses`;
-		this.spinnerService.show();
-		return this.http.get(url)
-		.pipe(
-			delay(2000),
-			map((courses: Array<any>) => {
-					const c = courses.map(course => {
-						const result = new CourseItem(
-							course.id,
-							course.name,
-							course.isTopRated,
-							course.date,
-							course.length,
-							course.description,
-							course.authors
-						);
+  getFullList() {
+    const url = this.coursesBaseUrl + `courses`;
+    this.spinnerService.show();
+    return this.http.get(url)
+      .pipe(
+        delay(2000),
+        map((courses: Array < any > ) => {
+          const c = courses.map(course => {
+            const result = new CourseItem(
+              course.id,
+              course.name,
+              course.isTopRated,
+              course.date,
+              course.length,
+              course.description,
+              course.authors
+            );
 
-						return result;
-					});
-		
-					return c;
-			})
-		);;
-	}
+            return result;
+          });
 
-  getList(startIndex: number, amount: number, searchInCourses: string) {
-		this.spinnerService.show();
-
-		return this.http.get < [] > (this.coursesBaseUrl + `courses?start=${startIndex}&count=${amount}&textFragment=${searchInCourses}`)
-		.pipe(
-			delay(2000),
-			map((courses: Array<any>) => {
-				const c = courses.map(course => {
-					const result = new CourseItem(
-						course.id,
-						course.name,
-						course.isTopRated,
-						course.date,
-						course.length,
-						course.description,
-						course.authors
-					);
-					return result;
-				});
-
-				this.spinnerService.hide();
-				return c;
-			})
-		);
+          return c;
+        })
+      );
   }
 
-  getCourseByID(id: number): Observable <CourseItem> {
-		this.spinnerService.show();
+  getList(startIndex: number, amount: number, searchInCourses: string) {
+    this.spinnerService.show();
+
+    return this.http.get < [] > (this.coursesBaseUrl + `courses?start=${startIndex}&count=${amount}&textFragment=${searchInCourses}`)
+      .pipe(
+        delay(2000),
+        map((courses: Array < any > ) => {
+          const c = courses.map(course => {
+            const result = new CourseItem(
+              course.id,
+              course.name,
+              course.isTopRated,
+              course.date,
+              course.length,
+              course.description,
+              course.authors
+            );
+            return result;
+          });
+
+          this.spinnerService.hide();
+          return c;
+        })
+      );
+  }
+
+  getCourseByID(id: number): Observable < CourseItem > {
+    this.spinnerService.show();
 
     const url = `${this.coursesBaseUrl}courses/${id}`;
     return this.http.get(url)
       .pipe(
         map((course: any) => {
-					console.log('Ответ в бэкенда: ', course);
-            const result = {
-							id: course.id,
-							title: course.name,
-							topRated: course.isTopRated,
-							creationDate: course.date,
-							duration: course.length,
-							description: course.description,
-							authors: course.authors
-						};
-						console.log('RESULT: ', result);
-						this.spinnerService.hide();
-            return result;
-          }),
+          console.log('Ответ в бэкенда: ', course);
+          const result = {
+            id: course.id,
+            title: course.name,
+            topRated: course.isTopRated,
+            creationDate: course.date,
+            duration: course.length,
+            description: course.description,
+            authors: course.authors
+          };
+          console.log('RESULT: ', result);
+          this.spinnerService.hide();
+          return result;
+        }),
         catchError(this.handleError)
       );
   }
 
   updateCourse(course: CourseItem): Observable < CourseItem > {
-		this.spinnerService.show();
+    this.spinnerService.show();
 
     const url = `${this.coursesBaseUrl}courses/${course.id}`;
     const toBody = {
@@ -121,7 +121,7 @@ export class CoursesObservableService {
   }
 
   createCourse(course: CourseItem) {
-		this.spinnerService.show();
+    this.spinnerService.show();
 
     const url = this.coursesBaseUrl + 'courses';
     const toBody = {
@@ -141,14 +141,14 @@ export class CoursesObservableService {
     };
 
     return this.http.post(url, body, options)
-			.pipe(
-				switchMap(() => this.getFullList()),
-				catchError(this.handleError)
+      .pipe(
+        switchMap(() => this.getFullList()),
+        catchError(this.handleError)
       );
   }
 
   removeCourse(course: CourseItem, listLength: number) {
-		this.spinnerService.show();
+    this.spinnerService.show();
 
     const url = this.coursesBaseUrl + `courses/${course.id}`;
     return this.http.delete(url)

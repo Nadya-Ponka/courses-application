@@ -16,8 +16,8 @@ import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
   styleUrls: ['./courses-list.component.css']
 })
 export class CoursesListComponent implements OnInit {
-	public searchText = '';
-	public inputSearchText;
+  public searchText = '';
+  public inputSearchText;
   public courses: CourseItem[];
   public courses$: CourseItem[];
   public coursesError$: Observable < Error | string > ;
@@ -26,22 +26,22 @@ export class CoursesListComponent implements OnInit {
     private orderByPipe: OrderByPipe,
     private router: Router,
     private searchByPipe: SearchByPipe,
-		private coursesObservableService: CoursesObservableService
+    private coursesObservableService: CoursesObservableService
   ) {}
 
   public onSearchText(event: any) {
-		this.inputSearchText.next(event.target.value);
+    this.inputSearchText.next(event.target.value);
 
-		// this.coursesObservableService.getFullList()
-		// .subscribe((courses: Array<CourseItem>) => {
-		// 	this.courses = this.searchByPipe.transform(courses, event.target.value);
-		// });
+    // this.coursesObservableService.getFullList()
+    // .subscribe((courses: Array<CourseItem>) => {
+    // 	this.courses = this.searchByPipe.transform(courses, event.target.value);
+    // });
   }
 
   public onDeleteCourse(event: CourseItem) {
     if (confirm('Do you really want to delete this course? Yes/No')) {
       this.coursesObservableService.removeCourse(event, this.courses.length).subscribe(data => {
-          this.courses = this.orderByPipe.transform(data, 'creationDate');
+        this.courses = this.orderByPipe.transform(data, 'creationDate');
       });
     }
   }
@@ -64,19 +64,19 @@ export class CoursesListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.coursesObservableService.getList(0, 5, '').subscribe(response => {
-        this.courses = this.orderByPipe.transform(response, 'creationDate');
-		});
-		
-		this.inputSearchText = new Subject();
-		this.inputSearchText.pipe(
-			debounce(() => interval(5000))
-		 ).subscribe({
-			next: (text: string) => {
-				this.coursesObservableService.getFullList()
-				.subscribe((courses: Array<CourseItem>) => {
-					this.courses = this.searchByPipe.transform(courses, text);
-				});
-			}
-		});
+      this.courses = this.orderByPipe.transform(response, 'creationDate');
+    });
+
+    this.inputSearchText = new Subject();
+    this.inputSearchText.pipe(
+      debounce(() => interval(5000))
+    ).subscribe({
+      next: (text: string) => {
+        this.coursesObservableService.getFullList()
+          .subscribe((courses: Array < CourseItem > ) => {
+            this.courses = this.searchByPipe.transform(courses, text);
+          });
+      }
+    });
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { AuthService } from '../services/auth-service.service';
 
@@ -18,17 +18,15 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable < boolean | UrlTree > | Promise < boolean | UrlTree > | boolean | UrlTree {
     console.log('CanActivate Guard is called');
-    const { url } = state;
-		// return this.checkLogin(url);
-		return this.authService.isAuthenticated().switchMap(e => {
-			if (e) {
-					return true;
-			}
-	}).catch(() => {
-			this.router.navigate(['/login']);
-			return false;
-	});
-
+    const {
+      url
+    } = state;
+    if (this.checkLogin(url)) {
+      return of(true);
+    } else {
+      this.router.navigate(['/login']);
+      return of(false);
+    }
   }
 
   private checkLogin(url: string): boolean | UrlTree {

@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, Route } from '@angular/router';
+import { Router } from '@angular/router';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry, switchMap, map, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { CourseItem } from 'src/app/shared/models/course';
 import { CoursesObservableService } from 'src/app/courses/services/courses-observable.service';
@@ -20,8 +19,8 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-		private route: ActivatedRoute,
-		private coursesObservableService: CoursesObservableService
+    private route: ActivatedRoute,
+    private coursesObservableService: CoursesObservableService
   ) {}
 
   public onSaveItem() {
@@ -47,10 +46,10 @@ export class CourseFormComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit() {
-		this.item = new CourseItem(undefined, '', false, new Date(), 0, '', []);
-		
-		let url = this.router.routerState.snapshot.url;
-		const navigatedForEdit = /\/courses\/add/.test(url);
+    this.item = new CourseItem(undefined, '', false, new Date(), 0, '', []);
+
+    let url = this.router.routerState.snapshot.url;
+    const navigatedForEdit = /\/courses\/add/.test(url);
     let id: number;
     if (!navigatedForEdit) {
       url = url.slice(9);
@@ -59,18 +58,22 @@ export class CourseFormComponent implements OnInit, OnDestroy {
 
     // it is not necessary to save subscription to route.paramMap
     // when router destroys this component, it handles subscriptions automatically
-    if (id !== undefined) this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) => {
-					return this.coursesObservableService.getCourseByID(+params.get('id'))
-				}))
-      .subscribe(
-        course => this.item = course,
-        err => console.log(err)
-    );
+    if (id !== undefined) {
+      this.route.paramMap
+        .pipe(
+          switchMap((params: ParamMap) => {
+            return this.coursesObservableService.getCourseByID(+params.get('id'));
+          }))
+        .subscribe(
+          course => this.item = course,
+          err => console.log(err)
+        );
+    }
   }
 
   public ngOnDestroy() {
-    if (this.sub) this.sub.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

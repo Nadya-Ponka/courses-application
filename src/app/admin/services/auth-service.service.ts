@@ -1,8 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
-import { UserItem } from 'src/app/shared/models/user';
-import { throwError } from 'rxjs';
+import { throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { CoursesAPI } from 'src/app/courses/services/courses.config';
@@ -31,31 +30,29 @@ export class AuthService {
   }
 
   public login(userinfo) {
-		return this.getAllUsers().
-		pipe(
-			map((users: Array<any>) => {
-				const currentUser = users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
-				if (currentUser) {
-					const info = {
-						id: currentUser.id,
-						token: currentUser.fakeToken,
-						name: {
-							firstName: currentUser.name.first,
-							lastName: currentUser.name.last
-						},
-						login: currentUser.login,
-						password: currentUser.password
-					}
+    return this.getAllUsers().
+    pipe(
+      map((users: Array < any > ) => {
+        const currentUser = users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
+        if (currentUser) {
+          const info = {
+            id: currentUser.id,
+            token: currentUser.fakeToken,
+            name: {
+              firstName: currentUser.name.first,
+              lastName: currentUser.name.last
+            },
+            login: currentUser.login,
+            password: currentUser.password
+          };
 
-					console.log('USER: ', currentUser);
-					console.log('INFO: ', info);
-
-    	    localStorage.setItem('userinfo', JSON.stringify(info.name.firstName));
-					localStorage.setItem('fakeToken', JSON.stringify(info.token));
-					this.isLoggedIn = true;
-					return info;
-				}})
-		);
+          localStorage.setItem('userinfo', JSON.stringify(info.name.firstName));
+          localStorage.setItem('fakeToken', JSON.stringify(info.token));
+          this.isLoggedIn = true;
+          return info;
+        }
+      })
+    );
     // const currentUser = this.users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
 
     // if (currentUser) {

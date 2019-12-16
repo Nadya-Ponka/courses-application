@@ -26,7 +26,7 @@ import { SpinnerModule } from 'src/app/widgets/spinner/spinner.module';
     LogoComponent,
     PageNotFoundComponent,
     RouterLinkStubDirective,
-		RouterOutletStubComponent,
+    RouterOutletStubComponent,
   ],
   imports: [AdminModule, BrowserModule, CoursesModule, FormsModule, HttpClientModule, SpinnerModule.forRoot(), AppRoutingModule],
   providers: [],
