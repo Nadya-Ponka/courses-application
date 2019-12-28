@@ -24,8 +24,8 @@ export class AdminComponent implements OnInit {
     this.authService.login(this.userinfo)
       .subscribe(user => {
         if (user) {
-					this.router.navigate(['/']);
-				} else {
+          this.router.navigate(['/']);
+        } else {
           alert('Credentials are wrong');
           this.userinfo.login = '';
           this.userinfo.password = '';

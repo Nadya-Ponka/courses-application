@@ -1,6 +1,6 @@
 <div class="container">
-		<input class="form-control" type="text" name="searchText" minlength="3" required [(ngModel)]="searchText"
-		(keyup)="searchText.length >= 3 ? onSearchText($event) : false" placeholder="Text to search">
+		<input class="form-control" type="text" name="searchText" [(ngModel)]="searchText"
+		(keyup)="onSearchText($event)" placeholder="Text to search">
 	<!-- 	<button class="btn btn-success my-2 my-sm-0" type="button" (click)="onSearchText(searchText)"
 			style="margin-left:5px;outline: none;" >Search</button> -->
   <button class="btn btn-primary my-2 my-lg-0" style="align-self: flex-end" (click)="onCreateCourse()">+ Add course</button>

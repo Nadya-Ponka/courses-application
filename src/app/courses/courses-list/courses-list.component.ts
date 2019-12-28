@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Observable, Subject, interval } from 'rxjs';
-import { debounce } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 import { CourseItem } from 'src/app/shared/models/course';
 import { CoursesObservableService } from 'src/app/courses/services/courses-observable.service';
 import { OrderByPipe } from 'src/app/shared/pipes/orderBy/order-by.pipe';
 import { SearchByPipe } from 'src/app/shared/pipes/searchBy/search-by.pipe';
+import { SpinnerService } from 'src/app/widgets';
 
 @Component({
   selector: 'courses-list',
@@ -26,7 +27,8 @@ export class CoursesListComponent implements OnInit {
     private orderByPipe: OrderByPipe,
     private router: Router,
     private searchByPipe: SearchByPipe,
-    private coursesObservableService: CoursesObservableService
+    private coursesObservableService: CoursesObservableService,
+    public spinnerService: SpinnerService
   ) {}
 
   public onSearchText(event: any) {
@@ -42,6 +44,7 @@ export class CoursesListComponent implements OnInit {
     if (confirm('Do you really want to delete this course? Yes/No')) {
       this.coursesObservableService.removeCourse(event, this.courses.length).subscribe(data => {
         this.courses = this.orderByPipe.transform(data, 'creationDate');
+        this.spinnerService.hide();
       });
     }
   }
@@ -59,22 +62,26 @@ export class CoursesListComponent implements OnInit {
   public onShowMore(): void {
     this.coursesObservableService.getList(this.courses.length, 5, '').subscribe(data => {
       this.courses.push(...data);
+      this.spinnerService.hide();
     });
   }
 
   public ngOnInit(): void {
     this.coursesObservableService.getList(0, 5, '').subscribe(response => {
       this.courses = this.orderByPipe.transform(response, 'creationDate');
+      this.spinnerService.hide();
     });
 
-    this.inputSearchText = new Subject();
+    this.inputSearchText = new Subject < string > ();
     this.inputSearchText.pipe(
-      debounce(() => interval(5000))
+      filter((val: string) => val.length >= 3),
+      debounceTime(1000)
     ).subscribe({
       next: (text: string) => {
         this.coursesObservableService.getFullList()
           .subscribe((courses: Array < CourseItem > ) => {
             this.courses = this.searchByPipe.transform(courses, text);
+            this.spinnerService.hide();
           });
       }
     });

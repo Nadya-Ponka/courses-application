@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
 
+import { Subject } from 'rxjs';
+
 @Injectable()
 export class SpinnerService {
-  private visible = false;
+  private visible = new Subject();
 
-  isVisible(): boolean {
+  constructor() {
+    this.visible.pipe().subscribe({
+      next: (isShown: boolean) => isShown
+    });
+  }
+
+  isVisible() {
     return this.visible;
   }
 
   hide(): void {
-    this.visible = false;
+    this.visible.next(false);
   }
 
   show(): void {
-    this.visible = true;
+    this.visible.next(true);
   }
 }

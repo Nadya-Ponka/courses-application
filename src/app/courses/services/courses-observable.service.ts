@@ -15,7 +15,7 @@ import { SpinnerService } from 'src/app/widgets';
 export class CoursesObservableService {
   constructor(
     private http: HttpClient,
-    public spinnerService: SpinnerService,
+    private spinnerService: SpinnerService,
     @Inject(CoursesAPI) private coursesBaseUrl: string
   ) {}
 
@@ -39,7 +39,6 @@ export class CoursesObservableService {
 
             return result;
           });
-
           return c;
         })
       );
@@ -65,7 +64,6 @@ export class CoursesObservableService {
             return result;
           });
 
-          this.spinnerService.hide();
           return c;
         })
       );
@@ -89,7 +87,6 @@ export class CoursesObservableService {
             authors: course.authors
           };
           console.log('RESULT: ', result);
-          this.spinnerService.hide();
           return result;
         }),
         catchError(this.handleError)

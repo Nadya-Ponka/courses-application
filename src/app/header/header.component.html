@@ -1,10 +1,10 @@
 <header>
 	<logo routerLink="/" ></logo>
 	<div class="admin">
-		<button class="btn btn-primary" (click)="onLogin()" *ngIf="!authService.isAuthenticated()" 
+		<button class="btn btn-primary" (click)="onLogin()" *ngIf="!userName" 
 			routerLink="/admin" title="Admin"><span class="icon-user"></span>Login</button>
-		<div *ngIf="authService.isAuthenticated()">
-			<span class="user-info">User: {{userInfo | slice:1:-1}}</span>
+		<div *ngIf="userName">
+			<span class="user-info">User: {{userName}}</span>
 			<button class="btn btn-primary" (click)="onLogout()">
 				<span class="icon-exit" ></span>Logout</button>	
 		</div>

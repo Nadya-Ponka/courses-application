@@ -1,7 +1,5 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
-import { Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/admin/services/auth-service.service';
 
@@ -10,28 +8,17 @@ import { AuthService } from 'src/app/admin/services/auth-service.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, DoCheck {
+export class HeaderComponent implements OnInit {
   public isLogged: boolean;
-  public userInfo;
+  public userName: string;
 
   constructor(
     public authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
-    // this.userInfo = localStorage.getItem('userinfo');
-    this.userInfo = new Subject();
-    this.userInfo.pipe().subscribe({
-      next: () => {
-        localStorage.getItem('userinfo');
-      }
-    });
-  }
-
-  public ngDoCheck(): void {
-    this.userInfo = localStorage.getItem('userinfo');
+    this.authService.isAuthenticated().subscribe((info: string) => this.userName = info);
   }
 
   public onLogin() {

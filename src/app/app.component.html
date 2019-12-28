@@ -1,6 +1,6 @@
 <app-header></app-header>
-<breadcrumbs *ngIf="authService.isAuthenticated()"></breadcrumbs>
-<app-spinner *ngIf="spinnerService.isVisible()"></app-spinner>
+<breadcrumbs *ngIf="showBreadcrumbs"></breadcrumbs>
+<app-spinner *ngIf="showSpinner"></app-spinner>
 <router-outlet></router-outlet>
 <app-footer></app-footer>
 

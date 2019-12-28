@@ -1,10 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
-import { throwError, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Subject, throwError, of } from 'rxjs';
+import { catchError, map, delay } from 'rxjs/operators';
 
 import { CoursesAPI } from 'src/app/courses/services/courses.config';
+import { SpinnerService } from 'src/app/widgets';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,18 @@ import { CoursesAPI } from 'src/app/courses/services/courses.config';
 export class AuthService {
   public isLoggedIn = false;
   public userID = 0;
+  public userInfo = new Subject();
+  private userToken: string = null;
 
   constructor(
     private http: HttpClient,
+    private spinnerService: SpinnerService,
     @Inject(CoursesAPI) private coursesBaseUrl: string
-  ) {}
+  ) {
+    this.userInfo.pipe().subscribe({
+      next: (text: string) => text
+    });
+  }
 
   public getAllUsers() {
     const url = this.coursesBaseUrl + 'users';
@@ -30,8 +38,11 @@ export class AuthService {
   }
 
   public login(userinfo) {
+    this.spinnerService.show();
+
     return this.getAllUsers().
     pipe(
+      delay(2000),
       map((users: Array < any > ) => {
         const currentUser = users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
         if (currentUser) {
@@ -48,6 +59,7 @@ export class AuthService {
 
           localStorage.setItem('userinfo', JSON.stringify(info.name.firstName));
           localStorage.setItem('fakeToken', JSON.stringify(info.token));
+          this.userInfo.next(info.name.firstName);
           this.isLoggedIn = true;
           return info;
         }
@@ -72,12 +84,15 @@ export class AuthService {
 
   logout(): void {
     this.isLoggedIn = false;
+    this.userInfo.next(null);
+
     localStorage.removeItem('userinfo');
     console.log('Log Out action');
   }
 
   isAuthenticated(): any {
-    return this.isLoggedIn = !!localStorage.getItem('userinfo');
+    return this.userInfo;
+    // return this.isLoggedIn = !!localStorage.getItem('userinfo');
   }
 
   getUserInfo(userinfo) {
