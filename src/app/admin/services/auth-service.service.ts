@@ -1,11 +1,13 @@
-import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Subject, throwError, of } from 'rxjs';
 import { catchError, map, delay } from 'rxjs/operators';
 
 import { CoursesAPI } from 'src/app/courses/services/courses.config';
 import { SpinnerService } from 'src/app/widgets';
+import { UserItem, IUser } from 'src/app/shared/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private spinnerService: SpinnerService,
+		private spinnerService: SpinnerService,
+		private router: Router,
     @Inject(CoursesAPI) private coursesBaseUrl: string
   ) {
     this.userInfo.pipe().subscribe({
@@ -37,13 +40,12 @@ export class AuthService {
     return this.http.get < [] > (url);
   }
 
-  public login(userinfo) {
+	public login(userinfo) {
     this.spinnerService.show();
 
-    return this.getAllUsers().
-    pipe(
-      delay(2000),
-      map((users: Array < any > ) => {
+    return this.getAllUsers()
+		.toPromise()
+		.then((users: Array < any > ) => {
         const currentUser = users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
         if (currentUser) {
           const info = {
@@ -61,27 +63,16 @@ export class AuthService {
           localStorage.setItem('fakeToken', JSON.stringify(info.token));
           this.userInfo.next(info.name.firstName);
           this.isLoggedIn = true;
-          return info;
+					this.router.navigate(['/']);
+					return info;
+			    } else {
+						alert('Credentials are wrong');
+						this.spinnerService.hide();
+						return null;
         }
       })
-    );
-    // const currentUser = this.users.find(usr => usr.login === userinfo.login && usr.password === userinfo.password);
-
-    // if (currentUser) {
-    //   let token: {};
-    //   this.getUserInfo(userinfo).subscribe(data => {
-    //     token = data;
-    //   });
-    //   setTimeout(() => {
-    //     console.log('Logged in successfully: ', token);
-    //     localStorage.setItem('userinfo', JSON.stringify(token));
-
-    //     this.isLoggedIn = true;
-    //   }, 500);
-    //   localStorage.setItem('userinfo', JSON.stringify(token));
-    // }
-  }
-
+	}
+	
   logout(): void {
     this.isLoggedIn = false;
     this.userInfo.next(null);

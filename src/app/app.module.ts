@@ -13,6 +13,7 @@ import { FooterComponent } from 'src/app/footer/footer.component';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { LogoComponent } from 'src/app/header/logo/logo.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
+import { RootStoreModule } from 'src/app/@ngrx/root-store.module';
 import { RouterLinkStubDirective } from 'src/app/testing-helpers/router-stubs';
 import { RouterOutletStubComponent } from 'src/app/testing-helpers/router-stubs';
 import { SpinnerModule } from 'src/app/widgets/spinner/spinner.module';
@@ -24,11 +25,11 @@ import { SpinnerModule } from 'src/app/widgets/spinner/spinner.module';
     FooterComponent,
     HeaderComponent,
     LogoComponent,
-    PageNotFoundComponent,
+		PageNotFoundComponent,
     RouterLinkStubDirective,
     RouterOutletStubComponent,
   ],
-  imports: [AdminModule, BrowserModule, CoursesModule, FormsModule, HttpClientModule, SpinnerModule.forRoot(), AppRoutingModule],
+  imports: [AdminModule, BrowserModule, CoursesModule, FormsModule, HttpClientModule, RootStoreModule, SpinnerModule.forRoot(), AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent]
 })

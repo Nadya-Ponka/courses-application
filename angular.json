@@ -115,6 +115,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "courses-application"
+    }
+  },
+  "defaultProject": "courses-application",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

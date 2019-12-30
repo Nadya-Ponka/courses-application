@@ -24,7 +24,7 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
       },
       {
-        path: ':id',
+        path: ':courseID',
         component: CourseFormComponent,
         canActivate: [AuthGuard]
       }
